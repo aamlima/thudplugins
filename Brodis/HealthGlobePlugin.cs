@@ -3,11 +3,11 @@ using Turbo.Plugins.Default;
 
 namespace Turbo.Plugins.Brodis
 {
-    public class HeathGlobePlugins : BasePlugin, IInGameWorldPainter
+    public class HeathGlobePlugin : BasePlugin, IInGameWorldPainter
     {
         public WorldDecoratorCollection HealthGlobeDecorator { get; set; }
 
-        public HeathGlobePlugins()
+        public HeathGlobePlugin()
         {
             Enabled = true;
         }
