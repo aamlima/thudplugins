@@ -8,7 +8,7 @@
 #### [GemsInventoryCountPlugin](thudplugins/Brodis/GemsInventoryCountPlugin.cs)
 >Shows how many gems you have. Last column shows how many flawless royal gems you would have if you upgrade all your gems.
 
-![example](https://cl.ly/luJj/Screen%20recording%202017-08-08%20at%2005.41.25%20PM.gif)
+![example](https://cl.ly/luMO/Image%202017-08-08%20at%206.06.24%20PM.png)
 ***
 #### [GemsPlugin](thudplugins/Brodis/GemsPlugin.cs)
 >Shows gems on the ground and minimap.
