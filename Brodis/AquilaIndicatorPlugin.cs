@@ -38,7 +38,7 @@ namespace Turbo.Plugins.Brodis
 
             if (HasSecondaryResource(Hud.Game.Me.HeroClassDefinition.HeroClass)) x2 -= uiRect.Width * 0.25f;
 
-            if (GetCurMainResourceValue(Hud.Game.Me.HeroClassDefinition.HeroClass) >= GetMaxMainResourceValue(Hud.Game.Me.HeroClassDefinition.HeroClass) * 0.9f)
+            if (Hud.Game.Me.Stats.ResourceCurPri >= Hud.Game.Me.Stats.ResourceMaxPri * 0.9f)
             {
                 GreenLineBrush.DrawLine(x1, y1, x2, y1);
             }
@@ -47,52 +47,6 @@ namespace Turbo.Plugins.Brodis
                 RedLineBrush.DrawLine(x1, y1, x2, y1);
             }
 
-        }
-
-        private float GetMaxMainResourceValue(HeroClass hClass)
-        {
-            switch (hClass)
-            {
-                case HeroClass.Barbarian:
-                    return Hud.Game.Me.Stats.ResourceMaxFury;
-                case HeroClass.Crusader:
-                    return Hud.Game.Me.Stats.ResourceMaxWrath;
-                case HeroClass.DemonHunter:
-                    return Hud.Game.Me.Stats.ResourceMaxHatred;
-                case HeroClass.Monk:
-                    return Hud.Game.Me.Stats.ResourceMaxSpirit;
-                case HeroClass.Necromancer:
-                    return Hud.Game.Me.Stats.ResourceMaxEssence;
-                case HeroClass.WitchDoctor:
-                    return Hud.Game.Me.Stats.ResourceMaxMana;
-                case HeroClass.Wizard:
-                    return Hud.Game.Me.Stats.ResourceMaxArcane;
-                default:
-                    return 0;
-            }
-        }
-
-        private float GetCurMainResourceValue(HeroClass hClass)
-        {
-            switch (hClass)
-            {
-                case HeroClass.Barbarian:
-                    return Hud.Game.Me.Stats.ResourceCurFury;
-                case HeroClass.Crusader:
-                    return Hud.Game.Me.Stats.ResourceCurWrath;
-                case HeroClass.DemonHunter:
-                    return Hud.Game.Me.Stats.ResourceCurHatred;
-                case HeroClass.Monk:
-                    return Hud.Game.Me.Stats.ResourceCurSpirit;
-                case HeroClass.Necromancer:
-                    return Hud.Game.Me.Stats.ResourceCurEssence;
-                case HeroClass.WitchDoctor:
-                    return Hud.Game.Me.Stats.ResourceCurMana;
-                case HeroClass.Wizard:
-                    return Hud.Game.Me.Stats.ResourceCurArcane;
-                default:
-                    return 0;
-            }
         }
 
         private bool HasSecondaryResource(HeroClass hClass)

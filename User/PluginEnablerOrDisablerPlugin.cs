@@ -1,3 +1,4 @@
+using Turbo.Plugins.Brodis;
 using Turbo.Plugins.Default;
 
 namespace Turbo.Plugins.User
@@ -21,6 +22,7 @@ namespace Turbo.Plugins.User
 
             Hud.TogglePlugin<DebugPlugin>(true);
             Hud.TogglePlugin<TopExperienceStatistics>(false);
+            Hud.TogglePlugin<AquilaIndicatorPlugin>(false);
 
             Hud.RunOnPlugin<PlayerBottomBuffListPlugin>(plugin =>
             {

@@ -10,13 +10,14 @@ namespace Turbo.Plugins.Brodis
     {
         private ISnoItem[,] _gems { get; set; }
         private int[] _location { get; set; }
+        private float GemSize { get; set; }
+
         public RectangleF GemInvRect { get; set; }
         public RectangleF GemBackgroundRect { get; set; }
         public ITexture GemInvTexture { get; set; }
         public ITexture GemBackgroundTexture { get; set; }
         public IFont GemQuantityFont { get; set; }
         public float GemSpacing { get; set; }
-        public float GemSize { get; set; }
         public bool IncludeSocketedGems { get; private set; }
 
         public GemsInventoryCountPlugin()
@@ -53,7 +54,7 @@ namespace Turbo.Plugins.Brodis
             GemQuantityFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 255, true, false, 128, 0, 0, 0, true);
 
             GemBackgroundRect = new RectangleF((Hud.Window.Size.Width - GemInvTexture.Width * GemSize * 5f) * 0.5f, (Hud.Window.Size.Height - GemInvTexture.Height * GemSize * 5f) * 0.5f,
-            (GemInvTexture.Width * GemSize + GemSpacing) * 6f, (GemInvTexture.Height * GemSize + GemSpacing) * 6f);
+            (GemInvTexture.Width * GemSize + GemSpacing) * 5f, (GemInvTexture.Height * GemSize + GemSpacing) * 5f);
 
         }
 
@@ -80,52 +81,43 @@ namespace Turbo.Plugins.Brodis
                     for (int x = 0; x < 5; x++)
                     {
                         texture = Hud.Texture.GetItemTexture(_gems[y, x]);
-                        if (texture != null)
-                        {
-                            GemBackgroundTexture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) - GemSpacing * 0.5f,
-                                GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) - GemSpacing * 0.5f,
-                                GemInvRect.Width + GemSpacing, GemInvRect.Height + GemSpacing);
-
-                            texture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x), GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y),
-                                GemInvRect.Width, GemInvRect.Height);
-
-                            var layout = GemQuantityFont.GetTextLayout(ValueToString(CountGems(_gems[y, x]), ValueFormat.NormalNumberNoDecimal));
-                            GemQuantityFont.DrawText(layout, GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) + (GemInvRect.Width - layout.Metrics.Width) * 0.5f,
-                                GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) + layout.Metrics.Height * 0.5f);
-                        }
+                        if (texture != null) DrawCell(texture, x, y, CountGems(_gems[y, x]).ToString());
                     }
 
                     texture = Hud.Texture.GetItemTexture(_gems[y, 4]);
                     if (texture != null)
                     {
-                        var x = 5;
-                        var total = CountGems(_gems[y, 4]) +
-                            Math.Floor(
+                        long total = CountGems(_gems[y, 4]) +
+                            (long)Math.Floor(
                                 (Math.Floor(
                                     (Math.Floor(
                                         (Math.Floor(CountGems(_gems[y, 0]) / 3f) + CountGems(_gems[y, 1])) / 3f) + CountGems(_gems[y, 2])) / 3f) + CountGems(_gems[y, 3])) / 3f);
 
-                        GemBackgroundTexture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) - GemSpacing * 0.5f,
-                            GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) - GemSpacing * 0.5f,
-                            GemInvRect.Width + GemSpacing, GemInvRect.Height + GemSpacing);
-
-                        texture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x), GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y),
-                            GemInvRect.Width, GemInvRect.Height);
-
-                        var layout = GemQuantityFont.GetTextLayout("?" + total.ToString());
-                        GemQuantityFont.DrawText(layout, GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) + (GemInvRect.Width - layout.Metrics.Width) * 0.5f,
-                                GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) + layout.Metrics.Height * 0.5f);
+                        DrawCell(texture, 5, y, "?" + total.ToString());
                     }
 
                 }
             }
+        }
 
+        private void DrawCell(ITexture texture, int x, int y, string text)
+        {
+            GemBackgroundTexture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) - GemSpacing * 0.5f,
+                GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) - GemSpacing * 0.5f,
+                GemInvRect.Width + GemSpacing, GemInvRect.Height + GemSpacing);
+
+            texture.Draw(GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x), GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y),
+                GemInvRect.Width, GemInvRect.Height);
+
+            var layout = GemQuantityFont.GetTextLayout(text);
+            GemQuantityFont.DrawText(layout, GemBackgroundRect.Left + ((GemInvRect.Width + GemSpacing) * x) + (GemInvRect.Width - layout.Metrics.Width) * 0.5f,
+                    GemBackgroundRect.Top + ((GemInvRect.Height + GemSpacing) * y) + layout.Metrics.Height * 0.5f);
         }
 
         private long CountGems(ISnoItem snoItem)
         {
             var count = 0;
-            
+
             if (!IncludeSocketedGems)
             {
                 foreach (var item in Hud.Inventory.ItemsInStash)
