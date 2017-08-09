@@ -1,13 +1,15 @@
 using System;
 using System.Drawing;
+using System.Linq;
 using Turbo.Plugins.Default;
 
 namespace Turbo.Plugins.Brodis
 {
 
-    public class GemsInventoryCountPlugin : BasePlugin, IInGameTopPainter
+    public class GemsInventoryCountPlugin : BasePlugin, IInGameTopPainter, IKeyEventHandler
     {
         private ISnoItem[,] _gems { get; set; }
+        private int[] _location { get; set; }
         public RectangleF GemInvRect { get; set; }
         public RectangleF GemBackgroundRect { get; set; }
         public ITexture GemInvTexture { get; set; }
@@ -15,6 +17,7 @@ namespace Turbo.Plugins.Brodis
         public IFont GemQuantityFont { get; set; }
         public float GemSpacing { get; set; }
         public float GemSize { get; set; }
+        public bool IncludeSocketedGems { get; private set; }
 
         public GemsInventoryCountPlugin()
         {
@@ -24,6 +27,8 @@ namespace Turbo.Plugins.Brodis
         public override void Load(IController hud)
         {
             base.Load(hud);
+
+            _location = new int[] { 0, 15, 19 };
 
             _gems = new ISnoItem[5, 5];
 
@@ -120,18 +125,35 @@ namespace Turbo.Plugins.Brodis
         private long CountGems(ISnoItem snoItem)
         {
             var count = 0;
-            foreach (var item in Hud.Inventory.ItemsInStash)
+            
+            if (!IncludeSocketedGems)
             {
-                if (item.SnoItem == snoItem) count += (int)item.Quantity;
+                foreach (var item in Hud.Inventory.ItemsInStash)
+                {
+                    if (item.SnoItem == snoItem) count += (int)item.Quantity;
+                }
+
+                foreach (var item in Hud.Inventory.ItemsInInventory)
+                {
+                    if (item.SnoItem == snoItem) count += (int)item.Quantity;
+                }
+            }
+            else
+            {
+                var Items = Hud.Game.Items.Where(i => _location.Contains((int)i.Location));
+                foreach (var item in Items)
+                {
+                    if (item.SnoItem == snoItem) count += item.Quantity > 0 ? (int)item.Quantity : 1;
+                }
             }
 
-            foreach (var item in Hud.Inventory.ItemsInInventory)
-            {
-                if (item.SnoItem == snoItem) count += (int)item.Quantity;
-            }
             return count;
         }
 
+        public void OnKeyEvent(IKeyEvent keyEvent)
+        {
+            IncludeSocketedGems = keyEvent.AltPressed;
+        }
     }
 
 }

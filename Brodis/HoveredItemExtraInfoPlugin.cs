@@ -1,3 +1,4 @@
+using System.Linq;
 using Turbo.Plugins.Default;
 
 namespace Turbo.Plugins.Brodis
@@ -10,6 +11,7 @@ namespace Turbo.Plugins.Brodis
         public IFont ItemCountFont { get; set; }
         public bool ShowItemCount { get; set; }
         public bool ShowItemSno { get; set; }
+        public int[] _location { get; set; }
 
         public HoveredItemExtraInfoPlugin()
         {
@@ -19,6 +21,8 @@ namespace Turbo.Plugins.Brodis
         public override void Load(IController hud)
         {
             base.Load(hud);
+
+            _location = new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 15, 19, 23, 24, 25, 26, 27, 28 };
 
             ShowItemCount = ShowItemSno = true;
 
@@ -34,7 +38,7 @@ namespace Turbo.Plugins.Brodis
             if (item == null) return;
 
             var uiTopElement = Hud.Inventory.GetHoveredItemTopUiElement();
-            
+
             if (ShowItemSno)
             {
                 var snoText = item.SnoItem.Sno.ToString();
@@ -56,12 +60,8 @@ namespace Turbo.Plugins.Brodis
         private long CountItem(ISnoItem snoItem)
         {
             var count = 0;
-            foreach (var item in Hud.Inventory.ItemsInStash)
-            {
-                if (item.SnoItem == snoItem) count += item.Quantity > 0 ? (int)item.Quantity : 1;
-            }
-
-            foreach (var item in Hud.Inventory.ItemsInInventory)
+            var Items = Hud.Game.Items.Where(i => _location.Contains((int)i.Location));
+            foreach (var item in Items)
             {
                 if (item.SnoItem == snoItem) count += item.Quantity > 0 ? (int)item.Quantity : 1;
             }
