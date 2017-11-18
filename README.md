@@ -1,5 +1,7 @@
 # Turbo.Plugins.Brodis
 ***
+### Last tested THUD version: 7.6
+***
 #### [GemsInventoryCountPlugin](Brodis/GemsInventoryCountPlugin.cs)
 >Shows how many gems you have. Last column shows how many flawless royal gems you would have if you upgrade all your gems.
 

@@ -20,6 +20,8 @@ namespace Turbo.Plugins.User
         public void Customize()
         {
 
+            Hud.TogglePlugin<ParagonCapturePlugin>(false);
+            Hud.TogglePlugin<CooldownSoundPlayerPlugin>(false);
             Hud.TogglePlugin<DebugPlugin>(true);
             Hud.TogglePlugin<TopExperienceStatistics>(false);
 
