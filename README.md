@@ -1,10 +1,5 @@
 # Turbo.Plugins.Brodis
 ***
-#### [AquilaIndicatorPlugin](Brodis/AquilaIndicatorPlugin.cs)
-> Useless plugin.
-
-![example](https://cl.ly/lupy/Image%202017-08-08%20at%203.37.36%20PM.png) ![example](https://cl.ly/luzx/Image%202017-08-08%20at%203.37.50%20PM.png)
-***
 #### [GemsInventoryCountPlugin](Brodis/GemsInventoryCountPlugin.cs)
 >Shows how many gems you have. Last column shows how many flawless royal gems you would have if you upgrade all your gems.
 
