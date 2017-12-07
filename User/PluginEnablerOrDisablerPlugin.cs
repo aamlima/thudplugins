@@ -24,6 +24,7 @@ namespace Turbo.Plugins.User
             Hud.TogglePlugin<CooldownSoundPlayerPlugin>(false);
             Hud.TogglePlugin<DebugPlugin>(true);
             Hud.TogglePlugin<TopExperienceStatistics>(false);
+            Hud.TogglePlugin<MonsterProgressPlugin>(false);
 
             Hud.RunOnPlugin<PlayerBottomBuffListPlugin>(plugin =>
             {
