@@ -16,7 +16,7 @@ namespace Turbo.Plugins.Brodis {
 
             Decorator = new GroundLabelDecorator(Hud) {
                 BackgroundBrush = Hud.Render.CreateBrush(175, 0, 0, 0, 0),
-                TextFont = Hud.Render.CreateFont("tahoma", 10, 255, 255, 255, 255, true, false, true)
+                TextFont = Hud.Render.CreateFont("tahoma", 9, 255, 255, 255, 255, true, false, true)
             };
         }
 

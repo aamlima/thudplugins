@@ -30,13 +30,12 @@ namespace Turbo.Plugins.Brodis {
             IncludeOffScreen = true;
             ClustersMax = 99;
 
-
             Decorator = new WorldDecoratorCollection(GroundDecorator = new GroundCircleDecorator(Hud) {
                 Brush = Hud.Render.CreateBrush(155, 200, 200, 200, 1),
                     Radius = Range
             }, MapDecorator = new MapShapeDecorator(Hud) {
-                Brush = Hud.Render.CreateBrush(100, 222, 0, 0, 0),
-                    ShadowBrush = Hud.Render.CreateBrush(100, 0, 0, 0, 1),
+                Brush = Hud.Render.CreateBrush(50, 255, 0, 0, 0),
+                    ShadowBrush = Hud.Render.CreateBrush(128, 0, 0, 0, 1),
                     Radius = Range,
                     ShapePainter = new CircleShapePainter(Hud),
             }, LabelDecorator = new GroundLabelDecorator(Hud) {
