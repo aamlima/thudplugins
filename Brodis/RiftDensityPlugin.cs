@@ -47,8 +47,6 @@ namespace Turbo.Plugins.Brodis {
         public void PaintWorld(WorldLayer layer) {
             if ((Hud.Game.SpecialArea != SpecialArea.Rift) && (Hud.Game.SpecialArea != SpecialArea.GreaterRift) && (Hud.Game.SpecialArea != SpecialArea.ChallengeRift)) return;
 
-            Clusters.Clear();
-
             var monsters = Hud.Game.AliveMonsters.Where(x =>(x.SnoMonster != null) && (IncludeOffScreen || x.IsOnScreen) && !((x.SummonerAcdDynamicId != 0) && (x.Rarity == ActorRarity.RareMinion)));
 
             foreach (var monster in monsters) {

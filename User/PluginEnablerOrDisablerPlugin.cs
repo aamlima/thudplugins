@@ -21,11 +21,11 @@ namespace Turbo.Plugins.User {
             Hud.TogglePlugin<TopExperienceStatistics>(false);
             Hud.TogglePlugin<MonsterProgressPlugin>(false);
 
+            Hud.GetPlugin<RiftDensityPlugin>().Range = 20f;
+            Hud.GetPlugin<RiftDensityPlugin>().ProgressMin = 2d;
             /*
-                        Hud.GetPlugin<RiftDensityPlugin>().Range = 20f;
-                        Hud.GetPlugin<RiftDensityPlugin>().ProgressMin = 0.75d;
-                        Hud.GetPlugin<RiftDensityPlugin>().ClustersMax = 3;
-                        Hud.GetPlugin<RiftDensityPlugin>().IncludeOffScreen = false;
+            Hud.GetPlugin<RiftDensityPlugin>().ClustersMax = 3;
+            Hud.GetPlugin<RiftDensityPlugin>().IncludeOffScreen = false;
             */
 
             Hud.RunOnPlugin<PlayerBottomBuffListPlugin>(plugin => {
